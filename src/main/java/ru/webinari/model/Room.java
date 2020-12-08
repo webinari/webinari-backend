@@ -13,7 +13,7 @@ public class Room {
 
     @Id
     @GeneratedValue(generator = "rooms_id_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(sequenceName = "rooms_id_seq", name = "rooms_id_sequence")
+    @SequenceGenerator(sequenceName = "rooms_id_seq", name = "rooms_id_sequence", allocationSize = 1)
     private Long Id;
     @ManyToOne
     @JoinColumn(name = "owner_id")

@@ -14,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(generator = "users_id_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(sequenceName = "users_id_seq", name = "users_id_sequence")
+    @SequenceGenerator(sequenceName = "users_id_seq", name = "users_id_sequence", allocationSize = 1)
     private Long Id;
     @OneToOne
     @JoinColumn(name = "role_id")
