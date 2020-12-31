@@ -1,4 +1,4 @@
-package ru.webinari.room.chat.config;
+package ru.webinari.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -12,7 +12,10 @@ public class WebinariSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/webinari-websocket").withSockJS();
+        registry
+                .addEndpoint("/webinari-websocket")
+                .setAllowedOrigins("http://3.132.89.177:3000")
+                .withSockJS();
     }
 
     @Override
