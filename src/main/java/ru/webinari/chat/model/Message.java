@@ -1,4 +1,4 @@
-package ru.webinari.room.chat;
+package ru.webinari.chat.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
