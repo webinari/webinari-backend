@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 public class WebinariUserDetails implements UserDetails {
 
+    private final Long userId;
     private final String username;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
@@ -20,6 +21,7 @@ public class WebinariUserDetails implements UserDetails {
     private final boolean isEnabled;
 
     public WebinariUserDetails(User user) {
+        this.userId = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = List.of();
