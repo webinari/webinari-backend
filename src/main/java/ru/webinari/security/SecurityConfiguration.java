@@ -3,6 +3,7 @@ package ru.webinari.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,11 +36,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .ignoringAntMatchers("/api/users")
                     .and()
                 .cors()
                     .and()
+                .headers()
+                    .frameOptions().sameOrigin()
+                    .and()
                 .authorizeRequests()
                     .antMatchers("/api/login", "/api/logout").permitAll()
+                    .antMatchers(HttpMethod.POST,"/api/users").permitAll()
+                    .antMatchers("/api/chat/**").authenticated()
                     .anyRequest().authenticated()
                     .and()
                 .httpBasic()

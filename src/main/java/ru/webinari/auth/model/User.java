@@ -25,4 +25,10 @@ public class User {
 //    @OneToMany(mappedBy = "owner")
 //    private List<Room> rooms;
 
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }
