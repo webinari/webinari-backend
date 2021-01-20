@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    List<Room> findAllByUser_Id(Long userId);
+    List<Room> findAllByUser_Id(Long id);
 
     boolean existsByNameAndUser(String name, User user);
 
