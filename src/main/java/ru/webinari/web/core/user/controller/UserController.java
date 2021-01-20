@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.webinari.web.core.ExceptionResponse;
+import ru.webinari.web.core.WrappedResponse;
 import ru.webinari.web.core.user.UserException;
+import ru.webinari.web.core.user.model.User;
 import ru.webinari.web.core.user.service.UserService;
 
 import javax.validation.Valid;
@@ -23,12 +24,12 @@ public class UserController {
     private final UserService service;
 
     @PostMapping
-    public ResponseEntity<ExceptionResponse> regUser(@Valid @RequestBody UserRequest request) {
+    public ResponseEntity<WrappedResponse<User>> regUser(@Valid @RequestBody UserRequest request) {
         try {
             service.regUser(request);
             return ResponseEntity.ok().build();
         } catch (UserException e) {
-            return ResponseEntity.badRequest().body(new ExceptionResponse(e.getMessage()));
+            return ResponseEntity.badRequest().body(WrappedResponse.fail(e.getMessage()));
         }
     }
 
