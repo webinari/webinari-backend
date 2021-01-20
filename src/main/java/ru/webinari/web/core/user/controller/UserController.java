@@ -28,8 +28,8 @@ public class UserController {
         try {
             service.regUser(request);
             return ResponseEntity.ok().build();
-        } catch (ApiException e) {
-            return ResponseEntity.badRequest().body(WrappedResponse.fail(e.getMessage()));
+        } catch (ApiException ex) {
+            return ResponseEntity.status(ex.getStatus()).body(WrappedResponse.fail(ex.getMessage()));
         }
     }
 
