@@ -31,7 +31,7 @@ public class AuthController {
 
         public UserResponse(Principal user) {
             WebinariUserDetails userDetails = (WebinariUserDetails) ((UsernamePasswordAuthenticationToken) user).getPrincipal();
-            this.id = userDetails.getUserId();
+            this.id = userDetails.getUser().getId();
             this.username = userDetails.getUsername();
         }
     }
