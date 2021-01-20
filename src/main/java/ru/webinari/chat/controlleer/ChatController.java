@@ -10,7 +10,7 @@ import ru.webinari.chat.model.Message;
 public class ChatController {
 
     @MessageMapping("/{chatId}")
-    @SendTo("/chat/{chatId}")
+    @SendTo("/api/chat/{chatId}")
     Message handleMessage(@DestinationVariable("chatId") String chatId, Message message) {
         return message;
     }
