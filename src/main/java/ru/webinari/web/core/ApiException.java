@@ -1,18 +1,18 @@
-package ru.webinari.web.core.user;
+package ru.webinari.web.core;
 
 import lombok.Getter;
 
 @Getter
-public class UserException extends Exception {
+public class ApiException extends Exception {
 
     private final String message;
 
-    public UserException(String message) {
+    public ApiException(String message) {
         super(message);
         this.message = message;
     }
 
-    public UserException(String message, Throwable cause) {
+    public ApiException(String message, Throwable cause) {
         super(message, cause);
         this.message = message;
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.webinari.web.core.WrappedResponse;
-import ru.webinari.web.core.user.UserException;
+import ru.webinari.web.core.ApiException;
 import ru.webinari.web.core.user.model.User;
 import ru.webinari.web.core.user.service.UserService;
 
@@ -28,7 +28,7 @@ public class UserController {
         try {
             service.regUser(request);
             return ResponseEntity.ok().build();
-        } catch (UserException e) {
+        } catch (ApiException e) {
             return ResponseEntity.badRequest().body(WrappedResponse.fail(e.getMessage()));
         }
     }
