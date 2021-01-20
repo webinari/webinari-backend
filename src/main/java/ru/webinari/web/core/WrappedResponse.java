@@ -18,6 +18,10 @@ public class WrappedResponse<T> {
         return new WrappedResponse<>(data, true, null);
     }
 
+    public static <T> WrappedResponse<T> done() {
+        return new WrappedResponse<>(null, true, null);
+    }
+
     public static <T> WrappedResponse<T> fail(String message) {
         return new WrappedResponse<>(null, false, new Error(message));
     }
