@@ -10,15 +10,16 @@ import lombok.RequiredArgsConstructor;
 public class WrappedResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final T data;
+    private final boolean success;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final Error error;
 
     public static <T> WrappedResponse<T> done(T data) {
-        return new WrappedResponse<>(data, null);
+        return new WrappedResponse<>(data, true, null);
     }
 
     public static <T> WrappedResponse<T> fail(String message) {
-        return new WrappedResponse<>(null, new Error(message));
+        return new WrappedResponse<>(null, false, new Error(message));
     }
 
     @Getter
