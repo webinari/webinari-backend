@@ -1,4 +1,4 @@
-package ru.webinari.auth.model;
+package ru.webinari.web.core.user.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

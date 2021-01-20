@@ -1,9 +1,9 @@
-package ru.webinari.security;
+package ru.webinari.web.security;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.webinari.auth.model.User;
+import ru.webinari.web.core.user.model.User;
 
 import java.util.Collection;
 import java.util.List;

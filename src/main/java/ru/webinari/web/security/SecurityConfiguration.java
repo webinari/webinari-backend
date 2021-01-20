@@ -1,4 +1,4 @@
-package ru.webinari.security;
+package ru.webinari.web.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebSecurity

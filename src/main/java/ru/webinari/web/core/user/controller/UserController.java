@@ -1,4 +1,4 @@
-package ru.webinari.dashboard.user.controller;
+package ru.webinari.web.core.user.controller;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.webinari.dashboard.ExceptionResponse;
-import ru.webinari.dashboard.user.UserException;
-import ru.webinari.dashboard.user.service.UserService;
+import ru.webinari.web.core.ExceptionResponse;
+import ru.webinari.web.core.user.UserException;
+import ru.webinari.web.core.user.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;

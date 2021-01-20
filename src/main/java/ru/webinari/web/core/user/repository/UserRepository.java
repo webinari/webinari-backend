@@ -1,7 +1,7 @@
-package ru.webinari.auth.repository;
+package ru.webinari.web.core.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.webinari.auth.model.User;
+import ru.webinari.web.core.user.model.User;
 
 import java.util.Optional;
 

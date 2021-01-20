@@ -1,4 +1,4 @@
-package ru.webinari.dashboard.room;
+package ru.webinari.web.core.room;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,14 +1,13 @@
-package ru.webinari.auth.controlller;
+package ru.webinari.web.core.auth.controlller;
 
 import lombok.Getter;
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.webinari.security.WebinariUserDetails;
+import ru.webinari.web.security.WebinariUserDetails;
 
 import java.security.Principal;
 

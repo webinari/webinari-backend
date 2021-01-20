@@ -1,4 +1,4 @@
-package ru.webinari.dashboard.user;
+package ru.webinari.web.core.user;
 
 import lombok.Getter;
 

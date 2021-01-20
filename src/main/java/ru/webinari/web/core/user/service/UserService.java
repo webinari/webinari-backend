@@ -1,14 +1,14 @@
-package ru.webinari.dashboard.user.service;
+package ru.webinari.web.core.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.webinari.auth.model.User;
-import ru.webinari.auth.repository.UserRepository;
-import ru.webinari.dashboard.user.UserException;
-import ru.webinari.dashboard.user.controller.UserController.UserRequest;
+import ru.webinari.web.core.user.model.User;
+import ru.webinari.web.core.user.repository.UserRepository;
+import ru.webinari.web.core.user.UserException;
+import ru.webinari.web.core.user.controller.UserController.UserRequest;
 
 @Slf4j
 @Service

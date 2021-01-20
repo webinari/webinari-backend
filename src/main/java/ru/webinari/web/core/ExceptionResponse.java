@@ -1,4 +1,4 @@
-package ru.webinari.dashboard;
+package ru.webinari.web.core;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
