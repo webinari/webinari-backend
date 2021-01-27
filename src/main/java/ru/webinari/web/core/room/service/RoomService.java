@@ -21,16 +21,11 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class RoomService {
 
     private final RoomRepository roomRepository;
-    private final UserRepository userRepository;
 
     @Transactional
     public List<Room> getRooms(Long userId) throws ApiException {
         try {
-            if (userId != null) {
-                return roomRepository.findAllByUser_Id(userId);
-            } else {
-                return roomRepository.findAll();
-            }
+            return roomRepository.findAllByUser_Id(userId);
         } catch (Exception ex) {
             throw new ApiException(NOT_FOUND, "Cant find rooms", ex);
         }
@@ -42,12 +37,9 @@ public class RoomService {
     }
 
     @Transactional
-    public Room createRoom(RoomRequest request) throws ApiException {
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new ApiException(BAD_REQUEST, "User with id " + request.getUserId() + " not found"));
-
+    public Room createRoom(RoomRequest request, User user) throws ApiException {
         String roomName = request.getName();
-        if (roomRepository.existsByNameAndUser(roomName, user)) {
+        if (!roomRepository.existsByNameAndUser(roomName, user)) {
             try {
                 return roomRepository.save(new Room(roomName, user));
             } catch (Exception ex) {
