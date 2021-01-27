@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.webinari.web.core.WrappedResponse;
 import ru.webinari.web.security.WebinariUserDetails;
 
 import java.security.Principal;
@@ -16,11 +17,11 @@ import java.security.Principal;
 public class AuthController {
 
     @GetMapping("/login")
-    public ResponseEntity<UserResponse> user(Principal user) {
+    public ResponseEntity<WrappedResponse<UserResponse>> user(Principal user) {
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(WrappedResponse.fail("Unauthorized"));
         }
-        return ResponseEntity.ok(new UserResponse(user));
+        return ResponseEntity.ok(WrappedResponse.done(new UserResponse(user)));
 
     }
 
