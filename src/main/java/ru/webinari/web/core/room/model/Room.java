@@ -18,14 +18,16 @@ public class Room {
     @SequenceGenerator(sequenceName = "rooms_id_seq", name = "rooms_id_sequence", allocationSize = 1)
     private Long id;
     private String name;
+    private String publicId;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Room(String name, User user) {
+    public Room(String name, String publicId, User user) {
         this.name = name;
+        this.publicId = publicId;
         this.user = user;
     }
 }

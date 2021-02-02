@@ -39,14 +39,17 @@ public class RoomService {
     @Transactional
     public Room createRoom(RoomRequest request, User user) throws ApiException {
         String roomName = request.getName();
-        if (!roomRepository.existsByNameAndUser(roomName, user)) {
-            try {
-                return roomRepository.save(new Room(roomName, user));
-            } catch (Exception ex) {
-                throw new ApiException(BAD_REQUEST, "Room name already exists");
-            }
+        if (roomRepository.existsByNameAndUser(roomName, user))
+            throw new ApiException(BAD_REQUEST, "Room with name " + roomName + " already exists");
+        String publicId = request.getPublicId();
+        if (roomRepository.existsByPublicIdAndUser(publicId, user))
+            throw new ApiException(BAD_REQUEST, "Room with public id " + publicId + " already exists");
+
+        try {
+            return roomRepository.save(new Room(roomName, publicId, user));
+        } catch (Exception ex) {
+            throw new ApiException(BAD_REQUEST, "Room name already exists");
         }
-        throw new ApiException(BAD_REQUEST, "Room with name " + roomName + " already exists");
     }
 
     public void deleteRoom(Long roomId) throws ApiException {
