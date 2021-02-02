@@ -43,6 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .frameOptions().sameOrigin()
                     .and()
                 .authorizeRequests()
+                    .antMatchers("/swagger-ui/**","/swagger-resources/**","/v3/api-docs").permitAll()
                     .antMatchers("/api/login", "/api/logout").permitAll()
                     .antMatchers(HttpMethod.POST,"/api/users").permitAll()
                     .antMatchers("/api/chat/**").authenticated()
@@ -60,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
