@@ -19,6 +19,8 @@ import javax.validation.constraints.NotEmpty;
 import java.security.Principal;
 import java.util.List;
 
+import static ru.webinari.web.core.ControllerUtils.wrap;
+
 @RestController
 @RequestMapping("/api/rooms")
 @RequiredArgsConstructor
@@ -29,43 +31,26 @@ public class RoomController {
     @GetMapping
     public ResponseEntity<WrappedResponse<List<Room>>> getRooms(Principal principal) {
         User user = getUserFromPrincipal(principal);
-        try {
-            List<Room> rooms = service.getRooms(user.getId());
-            return ResponseEntity.ok(WrappedResponse.done(rooms));
-        } catch (ApiException ex) {
-            return ResponseEntity.status(ex.getStatus()).body(WrappedResponse.fail(ex.getMessage()));
-        }
+        return wrap(() -> service.getRooms(user.getId()));
     }
 
     @GetMapping("/{roomId}")
     public ResponseEntity<WrappedResponse<Room>> getRoom(@PathVariable("roomId") Long roomId) {
-        try {
-            Room room = service.getRoom(roomId);
-            return ResponseEntity.ok(WrappedResponse.done(room));
-        } catch (ApiException ex) {
-            return ResponseEntity.status(ex.getStatus()).body(WrappedResponse.fail(ex.getMessage()));
-        }
+        return wrap(() -> service.getRoom(roomId));
     }
 
     @PostMapping
     public ResponseEntity<WrappedResponse<Room>> createRoom(@Valid @RequestBody RoomRequest request, Principal principal) {
         User user = getUserFromPrincipal(principal);
-        try {
-            Room room = service.createRoom(request, user);
-            return ResponseEntity.ok(WrappedResponse.done(room));
-        } catch (ApiException ex) {
-            return ResponseEntity.status(ex.getStatus()).body(WrappedResponse.fail(ex.getMessage()));
-        }
+        return wrap(() -> service.createRoom(request, user));
     }
 
     @DeleteMapping("/{roomId}")
     public ResponseEntity<WrappedResponse<Void>> deleteRoom(@PathVariable("roomId") Long roomId) {
-        try {
+        return wrap(() -> {
             service.deleteRoom(roomId);
-            return ResponseEntity.ok(WrappedResponse.done());
-        } catch (ApiException ex) {
-            return ResponseEntity.status(ex.getStatus()).body(WrappedResponse.fail(ex.getMessage()));
-        }
+            return null;
+        });
     }
 
     private User getUserFromPrincipal(Principal principal) {

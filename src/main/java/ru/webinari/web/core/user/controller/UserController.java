@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.webinari.web.core.ApiException;
 import ru.webinari.web.core.WrappedResponse;
-import ru.webinari.web.core.user.model.User;
 import ru.webinari.web.core.user.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+
+import static ru.webinari.web.core.ControllerUtils.wrap;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,13 +24,11 @@ public class UserController {
     private final UserService service;
 
     @PostMapping
-    public ResponseEntity<WrappedResponse<User>> regUser(@Valid @RequestBody UserRequest request) {
-        try {
+    public ResponseEntity<WrappedResponse<Void>> regUser(@Valid @RequestBody UserRequest request) {
+        return wrap(() -> {
             service.regUser(request);
-            return ResponseEntity.ok().build();
-        } catch (ApiException ex) {
-            return ResponseEntity.status(ex.getStatus()).body(WrappedResponse.fail(ex.getMessage()));
-        }
+            return null;
+        });
     }
 
     @Getter
