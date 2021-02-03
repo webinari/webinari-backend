@@ -1,15 +1,17 @@
 package ru.webinari.web.core.room.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.webinari.web.core.ApiException;
 import ru.webinari.web.core.room.controller.RoomController.RoomRequest;
 import ru.webinari.web.core.room.model.Room;
+import ru.webinari.web.core.room.model.RoomMetadata;
+import ru.webinari.web.core.room.model.Translation;
+import ru.webinari.web.core.room.repository.RoomMetadataRepository;
 import ru.webinari.web.core.room.repository.RoomRepository;
+import ru.webinari.web.core.room.repository.TranslationRepository;
 import ru.webinari.web.core.user.model.User;
-import ru.webinari.web.core.user.repository.UserRepository;
 
 import java.util.List;
 
@@ -21,6 +23,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final RoomMetadataRepository roomMetadataRepository;
+    private final TranslationRepository translationRepository;
 
     @Transactional
     public List<Room> getRooms(Long userId) throws ApiException {
@@ -39,14 +43,14 @@ public class RoomService {
     @Transactional
     public Room createRoom(RoomRequest request, User user) throws ApiException {
         String roomName = request.getName();
-        if (roomRepository.existsByNameAndUser(roomName, user))
-            throw new ApiException(BAD_REQUEST, "Room with name " + roomName + " already exists");
         String publicId = request.getPublicId();
         if (roomRepository.existsByPublicIdAndUser(publicId, user))
             throw new ApiException(BAD_REQUEST, "Room with public id " + publicId + " already exists");
 
         try {
-            return roomRepository.save(new Room(roomName, publicId, user));
+            RoomMetadata roomMetadata = roomMetadataRepository.save(new RoomMetadata(user.getId(), publicId));
+            Translation translation = translationRepository.save(new Translation());
+            return roomRepository.save(new Room(roomName, publicId, roomMetadata, translation, user));
         } catch (Exception ex) {
             throw new ApiException(BAD_REQUEST, "Room name already exists");
         }
@@ -58,5 +62,13 @@ public class RoomService {
         } catch (Exception ex) {
             throw new ApiException(BAD_REQUEST, "Cant delete room with id " + roomId, ex);
         }
+    }
+
+    @Transactional
+    public Room updateRoom(Long roomId, Room request) throws ApiException {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new ApiException(NOT_FOUND, "Room with id " + roomId + " not found"));
+        room.update(request);
+        return roomRepository.save(room);
     }
 }

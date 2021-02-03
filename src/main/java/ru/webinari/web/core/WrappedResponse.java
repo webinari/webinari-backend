@@ -1,11 +1,13 @@
 package ru.webinari.web.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
+@JsonView(Views.Preview.class)
 @AllArgsConstructor
 public class WrappedResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
