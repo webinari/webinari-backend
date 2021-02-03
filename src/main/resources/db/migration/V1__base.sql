@@ -17,7 +17,8 @@ create table events
 (
     id bigserial primary key,
     type int not null,
-    video_id varchar
+    video_id varchar,
+    start_date_time timestamptz
 );
 
 create table rooms
