@@ -13,7 +13,7 @@ create table rooms_metadata
     public_link varchar unique
 );
 
-create table translations
+create table events
 (
     id bigserial primary key,
     type int not null,
@@ -26,6 +26,6 @@ create table rooms
     name varchar,
     public_id varchar,
     user_id bigint not null references users (id),
-    translation_id bigint references translations (id),
+    event_id bigint references events (id),
     metadata_id bigint references rooms_metadata (id)
 )

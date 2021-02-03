@@ -7,10 +7,10 @@ import ru.webinari.web.core.ApiException;
 import ru.webinari.web.core.room.controller.RoomController.RoomRequest;
 import ru.webinari.web.core.room.model.Room;
 import ru.webinari.web.core.room.model.RoomMetadata;
-import ru.webinari.web.core.room.model.Translation;
+import ru.webinari.web.core.event.model.Event;
 import ru.webinari.web.core.room.repository.RoomMetadataRepository;
 import ru.webinari.web.core.room.repository.RoomRepository;
-import ru.webinari.web.core.room.repository.TranslationRepository;
+import ru.webinari.web.core.event.repository.EventRepository;
 import ru.webinari.web.core.user.model.User;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final RoomMetadataRepository roomMetadataRepository;
-    private final TranslationRepository translationRepository;
+    private final EventRepository eventRepository;
 
     @Transactional
     public List<Room> getRooms(Long userId) throws ApiException {
@@ -49,8 +49,8 @@ public class RoomService {
 
         try {
             RoomMetadata roomMetadata = roomMetadataRepository.save(new RoomMetadata(user.getId(), publicId));
-            Translation translation = translationRepository.save(new Translation());
-            return roomRepository.save(new Room(roomName, publicId, roomMetadata, translation, user));
+            Event event = eventRepository.save(new Event());
+            return roomRepository.save(new Room(roomName, publicId, roomMetadata, event, user));
         } catch (Exception ex) {
             throw new ApiException(BAD_REQUEST, "Room name already exists");
         }

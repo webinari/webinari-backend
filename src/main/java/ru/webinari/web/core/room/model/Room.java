@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.webinari.web.core.Views.Full;
 import ru.webinari.web.core.Views.Preview;
+import ru.webinari.web.core.event.model.Event;
 import ru.webinari.web.core.user.model.User;
 
 import javax.persistence.*;
@@ -30,9 +31,9 @@ public class Room {
     @JsonView(Full.class)
     private RoomMetadata metadata;
     @OneToOne
-    @JoinColumn(name = "translation_id")
+    @JoinColumn(name = "event_id")
     @JsonView(Full.class)
-    private Translation translation;
+    private Event event;
 
 
     @ManyToOne
@@ -40,11 +41,11 @@ public class Room {
     @JsonIgnore
     private User user;
 
-    public Room(String name, String publicId, RoomMetadata metadata, Translation translation, User user) {
+    public Room(String name, String publicId, RoomMetadata metadata, Event event, User user) {
         this.name = name;
         this.publicId = publicId;
         this.metadata = metadata;
-        this.translation = translation;
+        this.event = event;
         this.user = user;
     }
 
@@ -53,6 +54,6 @@ public class Room {
             this.name = room.getName();
 
         this.metadata.update(room.getMetadata());
-        this.translation.update(room.getTranslation());
+        this.event.update(room.getEvent());
     }
 }

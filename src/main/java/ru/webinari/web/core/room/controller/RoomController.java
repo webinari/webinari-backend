@@ -13,7 +13,7 @@ import ru.webinari.web.core.Views.Full;
 import ru.webinari.web.core.Views.Preview;
 import ru.webinari.web.core.WrappedResponse;
 import ru.webinari.web.core.room.model.Room;
-import ru.webinari.web.core.room.model.TranslationType;
+import ru.webinari.web.core.event.model.EventType;
 import ru.webinari.web.core.room.service.RoomService;
 import ru.webinari.web.core.user.model.User;
 import ru.webinari.web.security.WebinariUserDetails;
@@ -86,7 +86,7 @@ public class RoomController {
         @NotEmpty
         private String videoId;
         @NonNull
-        private TranslationType type;
+        private EventType type;
     }
 
 }
