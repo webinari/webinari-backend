@@ -18,7 +18,7 @@ public class ChatController {
     @MessageMapping("/{userId}/{eventKey}")
     @SendTo("/api/chat/{userId}/{eventKey}")
     public Message handleMessage(
-            @DestinationVariable("eventId") Long userId, @DestinationVariable("eventKey") String eventKey, Message message
+            @DestinationVariable("userId") Long userId, @DestinationVariable("eventKey") String eventKey, Message message
     ) throws ApiException {
         chatService.saveMessage(userId, eventKey, message);
         return message;
