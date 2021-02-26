@@ -68,7 +68,7 @@ public class RoomController {
     }
 
     @JsonView(Preview.class)
-    @PostMapping("/{roomId}")
+    @PutMapping("/{roomId}")
     public ResponseEntity<WrappedResponse<RoomMetadata>> changeRoomStatus(@PathVariable("roomId") Long roomId, @RequestParam("status") boolean status) {
         return wrap(() -> service.changeRoomStatus(roomId, status));
     }
