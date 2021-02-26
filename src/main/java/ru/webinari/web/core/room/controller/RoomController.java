@@ -13,7 +13,8 @@ import ru.webinari.web.core.Views.Full;
 import ru.webinari.web.core.Views.Preview;
 import ru.webinari.web.core.WrappedResponse;
 import ru.webinari.web.core.room.model.Room;
-import ru.webinari.web.core.event.model.EventType;
+import ru.webinari.web.core.room.model.RoomMetadata;
+import ru.webinari.web.core.room.model.RoomType;
 import ru.webinari.web.core.room.service.RoomService;
 import ru.webinari.web.core.user.model.User;
 import ru.webinari.web.security.WebinariUserDetails;
@@ -66,6 +67,18 @@ public class RoomController {
         return wrap(() -> service.updateRoom(roomId, request));
     }
 
+    @JsonView(Preview.class)
+    @PostMapping("/{roomId}")
+    public ResponseEntity<WrappedResponse<RoomMetadata>> changeRoomStatus(@PathVariable("roomId") Long roomId, @RequestParam("status") boolean status) {
+        return wrap(() -> service.changeRoomStatus(roomId, status));
+    }
+
+    @JsonView(Preview.class)
+    @GetMapping("/{userId}/{publicId}")
+    public ResponseEntity<WrappedResponse<RoomMetadata>> getRoomMetaInfo(@PathVariable("userId") Long userId, @PathVariable("publicId") String publicId) {
+        return wrap(() -> service.getRoomMetaInfo(userId, publicId));
+    }
+
     private User getUserFromPrincipal(Principal principal) {
         return ((WebinariUserDetails) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getUser();
     }
@@ -86,7 +99,7 @@ public class RoomController {
         @NotEmpty
         private String videoId;
         @NonNull
-        private EventType type;
+        private RoomType type;
     }
 
 }

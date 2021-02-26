@@ -7,10 +7,8 @@ import ru.webinari.web.core.ApiException;
 import ru.webinari.web.core.room.controller.RoomController.RoomRequest;
 import ru.webinari.web.core.room.model.Room;
 import ru.webinari.web.core.room.model.RoomMetadata;
-import ru.webinari.web.core.event.model.Event;
 import ru.webinari.web.core.room.repository.RoomMetadataRepository;
 import ru.webinari.web.core.room.repository.RoomRepository;
-import ru.webinari.web.core.event.repository.EventRepository;
 import ru.webinari.web.core.user.model.User;
 
 import java.util.List;
@@ -24,7 +22,6 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final RoomMetadataRepository roomMetadataRepository;
-    private final EventRepository eventRepository;
 
     @Transactional
     public List<Room> getRooms(Long userId) throws ApiException {
@@ -49,8 +46,7 @@ public class RoomService {
 
         try {
             RoomMetadata roomMetadata = roomMetadataRepository.save(new RoomMetadata(user.getId(), publicId));
-            Event event = eventRepository.save(new Event());
-            return roomRepository.save(new Room(roomName, publicId, roomMetadata, event, user));
+            return roomRepository.save(new Room(roomName, publicId, roomMetadata, user));
         } catch (Exception ex) {
             throw new ApiException(BAD_REQUEST, "Room name already exists");
         }
@@ -70,5 +66,20 @@ public class RoomService {
                 .orElseThrow(() -> new ApiException(NOT_FOUND, "Room with id " + roomId + " not found"));
         room.update(request);
         return roomRepository.save(room);
+    }
+
+    @Transactional
+    public RoomMetadata changeRoomStatus(Long roomId, boolean status) throws ApiException {
+        RoomMetadata roomMetadata = roomMetadataRepository.findByRoom_Id(roomId)
+                .orElseThrow(() -> new ApiException(NOT_FOUND, "RoomMetadata with roomId " + roomId + " not found"));
+        roomMetadata.setStarted(status);
+//        roomMetadataRepository.save(roomMetadata);
+        return roomMetadata;
+    }
+
+    public RoomMetadata getRoomMetaInfo(Long userId, String roomPublicId) throws ApiException {
+        Room room = roomRepository.findByUser_IdAndPublicId(userId, roomPublicId)
+                .orElseThrow(() -> new ApiException(NOT_FOUND, "Room with userId " + userId + " and publicId" + roomPublicId + " not found"));
+        return room.getMetadata();
     }
 }

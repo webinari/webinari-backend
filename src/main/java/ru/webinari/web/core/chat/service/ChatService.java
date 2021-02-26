@@ -9,7 +9,6 @@ import ru.webinari.web.core.chat.repository.MessageRepository;
 import ru.webinari.web.core.room.model.Room;
 import ru.webinari.web.core.room.repository.RoomRepository;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -25,7 +24,7 @@ public class ChatService {
     public void saveMessage(Long userId, String eventKey, Message message) throws ApiException {
         Room room = roomRepository.findByUser_IdAndPublicId(userId, eventKey)
                 .orElseThrow(() -> new ApiException(NOT_FOUND, "Room not found"));
-        List<Message> messages = room.getEvent().getMessages();
+        List<Message> messages = room.getMessages();
         message = messageRepository.save(message);
         messages.add(message);
     }

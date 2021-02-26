@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.webinari.web.core.Views.Full;
 import ru.webinari.web.core.Views.Preview;
-import ru.webinari.web.core.event.model.Event;
+import ru.webinari.web.core.chat.model.Message;
 import ru.webinari.web.core.user.model.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,8 +19,7 @@ import javax.persistence.*;
 public class Room {
 
     @Id
-    @GeneratedValue(generator = "rooms_id_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(sequenceName = "rooms_id_seq", name = "rooms_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Preview.class)
     private Long id;
     @JsonView(Preview.class)
@@ -28,12 +28,11 @@ public class Room {
     private String publicId;
     @OneToOne
     @JoinColumn(name = "metadata_id")
-    @JsonView(Full.class)
     private RoomMetadata metadata;
-    @OneToOne
-    @JoinColumn(name = "event_id")
-    @JsonView(Full.class)
-    private Event event;
+
+    @OneToMany(mappedBy = "room")
+    @OrderBy("postTime desc")
+    private List<Message> messages = new ArrayList<>();
 
 
     @ManyToOne
@@ -41,11 +40,10 @@ public class Room {
     @JsonIgnore
     private User user;
 
-    public Room(String name, String publicId, RoomMetadata metadata, Event event, User user) {
+    public Room(String name, String publicId, RoomMetadata metadata, User user) {
         this.name = name;
         this.publicId = publicId;
         this.metadata = metadata;
-        this.event = event;
         this.user = user;
     }
 
@@ -54,6 +52,5 @@ public class Room {
             this.name = room.getName();
 
         this.metadata.update(room.getMetadata());
-        this.event.update(room.getEvent());
     }
 }
