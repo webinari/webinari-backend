@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.webinari.web.core.Views.Full;
 import ru.webinari.web.core.Views.Preview;
 import ru.webinari.web.core.chat.model.Message;
 import ru.webinari.web.core.user.model.User;
@@ -28,6 +29,7 @@ public class Room {
     private String publicId;
     @OneToOne
     @JoinColumn(name = "metadata_id")
+    @JsonView(Full.class)
     private RoomMetadata metadata;
 
     @OneToMany(mappedBy = "room")
