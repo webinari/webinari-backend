@@ -61,7 +61,7 @@ public class RoomController {
         });
     }
 
-    @JsonView(Preview.class)
+    @JsonView(Full.class)
     @PostMapping("/{roomId}")
     public ResponseEntity<WrappedResponse<Room>> updateRoom(@PathVariable("roomId") Long roomId, @RequestBody Room request) {
         return wrap(() -> service.updateRoom(roomId, request));

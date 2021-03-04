@@ -73,7 +73,6 @@ public class RoomService {
         RoomMetadata roomMetadata = roomMetadataRepository.findByRoom_Id(roomId)
                 .orElseThrow(() -> new ApiException(NOT_FOUND, "RoomMetadata with roomId " + roomId + " not found"));
         roomMetadata.setStarted(status);
-//        roomMetadataRepository.save(roomMetadata);
         return roomMetadata;
     }
 

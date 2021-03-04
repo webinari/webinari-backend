@@ -14,7 +14,7 @@ create table rooms_metadata
     type            int not null,
     video_id        varchar,
     start_date_time timestamptz,
-    is_started      bool
+    started      bool
 );
 
 create table rooms
