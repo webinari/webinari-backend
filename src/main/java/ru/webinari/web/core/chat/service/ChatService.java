@@ -24,8 +24,10 @@ public class ChatService {
     public void saveMessage(Long userId, String eventKey, Message message) throws ApiException {
         Room room = roomRepository.findByUser_IdAndPublicId(userId, eventKey)
                 .orElseThrow(() -> new ApiException(NOT_FOUND, "Room not found"));
-        List<Message> messages = room.getMessages();
+        message.setRoom(room);
         message = messageRepository.save(message);
+
+        List<Message> messages = room.getMessages();
         messages.add(message);
     }
 
