@@ -92,7 +92,7 @@ public class RoomService {
     @Transactional
     public void updateRoomMessages(Long roomId, List<UpdateMessage> messages) throws ApiException {
         for (UpdateMessage newMessage : messages) {
-            Message message = messageRepository.findByRoom_Id(roomId)
+            Message message = messageRepository.findByIdAndRoom_Id(newMessage.getId(), roomId)
                     .orElseThrow(() -> new ApiException(NOT_FOUND, "Message with roomId " + roomId + " not found"));
             message.update(newMessage);
         }
