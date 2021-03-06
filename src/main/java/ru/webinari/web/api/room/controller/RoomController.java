@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.webinari.web.ApiException;
 import ru.webinari.web.api.room.dto.*;
+import ru.webinari.web.chat.model.Message;
 import ru.webinari.web.format.WrappedResponse;
 import ru.webinari.web.api.room.model.Room;
 import ru.webinari.web.api.room.model.RoomMetadata;
@@ -83,6 +84,22 @@ public class RoomController {
     ) throws ApiException {
         RoomMetadata roomMetadata = service.getRoomMetadata(userId, publicId);
         return done(new PreviewMetadata(roomMetadata));
+    }
+
+    @GetMapping("/{roomId}/messages")
+    public WrappedResponse<List<FullMessage>> getRoomMessages(
+            @PathVariable("roomId") Long roomId
+    ) {
+        List<Message> messages = service.getRoomMessages(roomId);
+        return done(messages.stream().map(FullMessage::new).collect(toList()));
+    }
+
+    @PostMapping("/{roomId}/messages")
+    public WrappedResponse<Void> updateRoomMessages(
+            @PathVariable("roomId") Long roomId, @RequestBody List<UpdateMessage> messages
+    ) throws ApiException {
+        service.updateRoomMessages(roomId, messages);
+        return done();
     }
 
     private User getUserFromPrincipal(Principal principal) {
