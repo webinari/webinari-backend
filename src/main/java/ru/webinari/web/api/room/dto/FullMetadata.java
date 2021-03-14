@@ -1,25 +1,26 @@
 package ru.webinari.web.api.room.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.webinari.web.api.room.model.RoomMetadata;
 import ru.webinari.web.api.room.model.RoomType;
 
 import javax.validation.constraints.NotEmpty;
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.*;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
-@Getter
+@Data
+@NoArgsConstructor
 public class FullMetadata extends PreviewMetadata {
     @NotEmpty
-    private final String lecturer;
+    private String lecturer;
     @JsonProperty(access = READ_ONLY)
-    private final String publicLink;
+    private String publicLink;
     @NotEmpty
-    private final RoomType type;
+    private RoomType type;
     @NotEmpty
-    private final String videoId;
+    private String videoId;
 
     public FullMetadata(RoomMetadata metadata) {
         super(metadata);

@@ -1,12 +1,14 @@
 package ru.webinari.web.api.room.dto;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import ru.webinari.web.api.room.model.Room;
 
-
-@Getter
+@Data
+@NoArgsConstructor
 public class FullRoom extends PreviewRoom {
-    private final FullMetadata metadata;
+    private FullMetadata metadata;
 
     public FullRoom(Room room) {
         super(room);

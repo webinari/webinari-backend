@@ -1,13 +1,15 @@
 package ru.webinari.web.api.room.dto;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.webinari.web.api.room.model.Room;
 
-@Getter
+@Data
+@NoArgsConstructor
 public class PreviewRoom {
-    protected final Long id;
-    protected final String name;
-    protected final String publicId;
+    protected Long id;
+    protected String name;
+    protected String publicId;
 
     public PreviewRoom(Room room) {
         this.id = room.getId();
